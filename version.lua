@@ -1,7 +1,7 @@
 do
 
 function run(msg, matches)
- retrun 'magma bot test v.1'..[[
+ return 'magma bot test v.1'..[[
    
    Powered by: amir w.h 
    maker plugin : amir w.h
