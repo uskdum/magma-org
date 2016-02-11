@@ -1,0 +1,89 @@
+antienglish = {}-- An empty table for solving multiple kicking problem
+
+do
+local function run(msg, matches)
+if msg.to.type == 'chat' then
+  if is_momod(msg) then -- Ignore mods,owner,admins
+    return
+  end
+  local data = load_data(_config.moderation.data)
+  if data[tostring(msg.to.id)]['settings']['lock_eng'] then
+    if data[tostring(msg.to.id)]['settings']['lock_eng'] == 'yes' then
+      if antienglish[msg.from.id] == true then 
+        return
+      end
+      send_large_msg("chat#id".. msg.to.id , "⛔️ حروف انگلیسی مجاز نمیباشد.")
+      local name = user_print_name(msg.from)
+      savelog(msg.to.id, name.." ["..msg.from.id.."] kicked (english was locked) ")
+      chat_del_user('chat#id'..msg.to.id,'user#id'..msg.from.id,ok_cb,false)
+		  antienglish[msg.from.id] = true
+      return
+    end
+  end
+  return
+end
+end
+local function cron()
+  antienglish = {} -- Clear antienglish table 
+end
+return {
+  patterns = {
+"(f)",
+"(g)",
+"(h)",
+"(i)",
+"(j)",
+"(k)",
+"(l)",
+"(m)",
+"(n)",
+"(o)",
+"(p)",
+"(q)",
+"(r)",
+"(s)",
+"(t)",
+"(u)",
+"(v)",
+"(w)",
+"(x)",
+"(y)",
+"(z)",
+"(a)",
+"(b)",
+"(c)",	
+"(d)",
+"(e)",
+"(f)",
+"(A)",
+"(B)",
+"(C)",
+"(D)",
+"(E)",
+"(F)",
+"(G)",
+"(H)",
+"(I)",
+"(J)",
+"(K)",
+"(L)",
+"(M)",
+"(N)",
+"(O)",
+"(P)",
+"(Q)",
+"(R)",
+"(S)",
+"(T)",
+"(U)",
+"(V)",
+"(W)",
+"(X)",
+"(Y)",
+"(Z)"
+   },
+  run = run,
+	cron = cron
+}
+
+end
